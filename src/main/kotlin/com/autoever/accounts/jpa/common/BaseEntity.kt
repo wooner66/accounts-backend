@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 abstract class BaseEntity : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null
+    var id: Long? = null
 
     @CreatedDate
     @Column(updatable = false, nullable = false)

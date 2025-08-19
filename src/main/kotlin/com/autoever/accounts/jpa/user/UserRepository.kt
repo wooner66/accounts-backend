@@ -2,4 +2,8 @@ package com.autoever.accounts.jpa.user
 
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface UserRepository : JpaRepository<User, Int>
+interface UserRepository : JpaRepository<User, Long> {
+    fun findByUsername(username: String): User?
+    fun existsByUsername(username: String): Boolean
+    fun existsByResidentRegistrationNumberHash(residentRegistrationNumberHash: String): Boolean
+}
