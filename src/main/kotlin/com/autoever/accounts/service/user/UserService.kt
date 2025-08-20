@@ -1,11 +1,13 @@
 package com.autoever.accounts.service.user
 
 import com.autoever.accounts.common.exception.DuplicatedUserException
+import com.autoever.accounts.common.exception.NotFoundException
 import com.autoever.accounts.common.extension.getTopLevelByAddress
 import com.autoever.accounts.jpa.user.User
 import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.user.dto.CreateUserRequestDto
 import com.autoever.accounts.service.user.dto.CreateUserResponseDto
+import com.autoever.accounts.service.user.dto.UserDto
 import com.autoever.accounts.util.crypto.Crypto
 import com.autoever.accounts.util.hash.Hashing
 import org.slf4j.LoggerFactory
@@ -20,7 +22,6 @@ class UserService(
     private val crypto: Crypto,
     private val hashing: Hashing,
 ) {
-    // logger 등록
     private val logger = LoggerFactory.getLogger(UserService::class.java)
 
     @Transactional
@@ -101,4 +102,17 @@ class UserService(
             throw DuplicatedUserException("이미 가입된 주민등록번호입니다.")
         }
     }
+
+	fun getMyInfo(username: String): UserDto {
+		val user = userRepository.findByUsername(username)
+			?: throw NotFoundException("사용자를 찾을 수 없습니다. : $username")
+
+		return UserDto(
+			id = user.id!!,
+			username = user.username,
+			name = user.name,
+			phone = user.phone,
+			topLevelAddress = user.topLevelAddress,
+		)
+	}
 }
