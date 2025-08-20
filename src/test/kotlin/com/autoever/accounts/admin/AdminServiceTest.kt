@@ -1,6 +1,7 @@
 package com.autoever.accounts.admin
 
 import com.autoever.accounts.common.exception.NotFoundException
+import com.autoever.accounts.config.BaseTest
 import com.autoever.accounts.jpa.user.condition.UserSearchCondition
 import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.admin.AdminService
@@ -21,13 +22,13 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @SpringBootTest
-class AdminServiceTest {
+class AdminServiceTest : BaseTest() {
     lateinit var adminService: AdminService
 
     @MockkBean
     lateinit var userRepository: UserRepository
 
-    @MockkBean
+    @MockkBean(relaxed = true)
     lateinit var passwordEncoder: PasswordEncoder
 
     @BeforeEach
