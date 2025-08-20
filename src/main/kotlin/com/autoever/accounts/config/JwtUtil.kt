@@ -10,9 +10,12 @@ import java.util.Date
 
 @Component
 class JwtUtil(
-	@Value("\${app.jwt.secret}") private val secret: String,
-	@Value("\${app.jwt.issuer}") private val issuer: String,
-	@Value("\${app.jwt.expireMinutes}") private val expireMinutes: Long
+	@Value("\${app.jwt.secret}")
+	private val secret: String,
+	@Value("\${app.jwt.issuer}")
+	private val issuer: String,
+	@Value("\${app.jwt.expireMinutes}")
+	private val expireMinutes: Long
 ) {
 	private val key by lazy { Keys.hmacShaKeyFor(secret.toByteArray(StandardCharsets.UTF_8)) }
 

@@ -11,7 +11,8 @@ import javax.crypto.spec.SecretKeySpec
 
 @Component
 class Crypto(
-    @Value("\${app.crypto.aes-key-base64}") private val keyBase64: String
+    @Value("\${app.crypto.aes-key-base64}")
+	private val keyBase64: String,
 ) {
     private val secureRandom = SecureRandom()
     private val key: SecretKey by lazy {

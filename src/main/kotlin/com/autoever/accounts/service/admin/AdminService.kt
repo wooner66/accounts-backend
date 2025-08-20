@@ -2,7 +2,6 @@ package com.autoever.accounts.service.admin
 
 import com.autoever.accounts.common.exception.NotFoundException
 import com.autoever.accounts.common.extension.getTopLevelByAddress
-import com.autoever.accounts.jpa.user.User
 import com.autoever.accounts.jpa.user.condition.UserSearchCondition
 import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.admin.dto.GetUsersRequestDto

@@ -1,6 +1,7 @@
 package com.autoever.accounts.admin
 
 import com.autoever.accounts.common.exception.NotFoundException
+import com.autoever.accounts.common.test.ServiceTest
 import com.autoever.accounts.config.BaseTest
 import com.autoever.accounts.jpa.user.condition.UserSearchCondition
 import com.autoever.accounts.jpa.user.repository.UserRepository
@@ -15,13 +16,12 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 
-@SpringBootTest
+@ServiceTest
 class AdminServiceTest : BaseTest() {
     lateinit var adminService: AdminService
 

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable
 
 interface UserQueryDslRepository {
     fun findAllByCondition(condition: UserSearchCondition, pageable: Pageable): Page<User>
+	fun findAllByIdBetween(startId: Long, endId: Long, pageable: Pageable): Page<User>
 }
 
 class UserQueryDslRepositoryImpl : UserQueryDslRepository {
@@ -50,4 +51,24 @@ class UserQueryDslRepositoryImpl : UserQueryDslRepository {
             total
         )
     }
+
+	override fun findAllByIdBetween(startId: Long, endId: Long, pageable: Pageable): Page<User> {
+		val results = selectFrom(user)
+			.where(user.id.between(startId, endId))
+			.orderBy(user.id.asc())
+			.offset(pageable.offset)
+			.limit(pageable.pageSize.toLong())
+			.fetch()
+
+		val total = select(user.id.count())
+			.from(user)
+			.where(user.id.between(startId, endId))
+			.fetchOne() ?: 0L
+
+		return PageImpl(
+			results,
+			pageable,
+			total
+		)
+	}
 }

@@ -2,10 +2,12 @@ package com.autoever.accounts.controller.admin.extension
 
 import com.autoever.accounts.controller.admin.dto.GetUsersRequest
 import com.autoever.accounts.controller.admin.dto.GetUsersResponse
+import com.autoever.accounts.controller.admin.dto.SendMessageResponse
 import com.autoever.accounts.controller.admin.dto.UpdateUserRequest
 import com.autoever.accounts.controller.admin.dto.UpdateUserResponse
 import com.autoever.accounts.service.admin.dto.GetUsersRequestDto
 import com.autoever.accounts.service.admin.dto.GetUsersResponseDto
+import com.autoever.accounts.service.admin.dto.SendMessageResponseDto
 import com.autoever.accounts.service.admin.dto.UpdateUserRequestDto
 import com.autoever.accounts.service.admin.dto.UpdateUserResponseDto
 import kotlin.Long
@@ -45,4 +47,11 @@ fun UpdateUserResponseDto.toResponse(): UpdateUserResponse {
         isSuccess = isSuccess,
         message = message,
     )
+}
+
+fun SendMessageResponseDto.toResponse(): SendMessageResponse {
+	return SendMessageResponse(
+		isSuccess = isSuccess,
+		message = message,
+	)
 }
