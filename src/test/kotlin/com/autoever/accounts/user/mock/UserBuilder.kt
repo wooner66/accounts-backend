@@ -18,6 +18,10 @@ object UserBuilder {
         )
     }
 
+    fun `사용자 Entity 생성`(): User {
+        return `사용자 Entity 목록 생성`().first()
+    }
+
     fun `사용자 Entity 목록 생성`(): List<User> {
         return listOf(
             User(
