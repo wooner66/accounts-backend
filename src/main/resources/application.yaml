@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: accounts-backend
+  config:
+    import: "optional:/config/"
+  profiles:
+    active: local
+    include:
+      - local
+
+  datasource:
+    url: jdbc:h2:mem:accounts;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+
+  h2:
+    console:
+      enabled: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+app:
+  external:
+    kakaotalk:
+      url: http://localhost:8081/kakaotalk-messages
+      permitsPerMinute: 100
+
+    sms:
+      url: http://localhost:8082/sms
+      permitsPerMinute: 500
+
+  messaging:
+    kafka-topic: message-age-bucket
+
+logging:
+  level:
+    org.hibernate.SQL: warn
+    org.hibernate.orm.jdbc.bind: warn
+
+server:
+  port: 8080
