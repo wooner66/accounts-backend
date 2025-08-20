@@ -4,8 +4,7 @@ import com.autoever.accounts.jpa.user.QUser.user
 import com.autoever.accounts.jpa.user.User
 import com.autoever.accounts.jpa.user.condition.UserSearchCondition
 import com.querydsl.core.BooleanBuilder
-import com.querydsl.jpa.JPAExpressions.select
-import com.querydsl.jpa.JPAExpressions.selectFrom
+import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
@@ -15,7 +14,9 @@ interface UserQueryDslRepository {
 	fun findAllByIdBetween(startId: Long, endId: Long, pageable: Pageable): Page<User>
 }
 
-class UserQueryDslRepositoryImpl : UserQueryDslRepository {
+class UserQueryDslRepositoryImpl(
+	private val jpaQueryFactory: JPAQueryFactory,
+) : UserQueryDslRepository {
     override fun findAllByCondition(condition: UserSearchCondition, pageable: Pageable): Page<User> {
         val builder = BooleanBuilder().apply {
             if (condition.userIds.isNotEmpty()) {
@@ -33,14 +34,16 @@ class UserQueryDslRepositoryImpl : UserQueryDslRepository {
             }
         }
 
-        val results = selectFrom(user)
+        val results = jpaQueryFactory
+			.selectFrom(user)
             .where(builder)
             .orderBy(user.id.desc())
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
             .fetch()
 
-        val total = select(user.id.count())
+        val total = jpaQueryFactory
+			.select(user.id.count())
             .from(user)
             .where(builder)
             .fetchOne() ?: 0L
@@ -53,14 +56,16 @@ class UserQueryDslRepositoryImpl : UserQueryDslRepository {
     }
 
 	override fun findAllByIdBetween(startId: Long, endId: Long, pageable: Pageable): Page<User> {
-		val results = selectFrom(user)
+		val results = jpaQueryFactory
+			.selectFrom(user)
 			.where(user.id.between(startId, endId))
 			.orderBy(user.id.asc())
 			.offset(pageable.offset)
 			.limit(pageable.pageSize.toLong())
 			.fetch()
 
-		val total = select(user.id.count())
+		val total = jpaQueryFactory
+			.select(user.id.count())
 			.from(user)
 			.where(user.id.between(startId, endId))
 			.fetchOne() ?: 0L

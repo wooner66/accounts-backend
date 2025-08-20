@@ -78,9 +78,9 @@ class AdminServiceTest : BaseTest() {
         // given
         val userId = 1L
         val request = UpdateUserRequestDto(
-            id = userId,
             password = "newPassword123",
-            address = "서울특별시 강남구 역삼동 123-45"
+            address = "서울특별시",
+			addressDetail = "강남구 역삼동 123-45",
         )
 
         val userEntity = `사용자 Entity 목록 생성`().first()
@@ -94,7 +94,7 @@ class AdminServiceTest : BaseTest() {
         } returns "encodedPassword123"
 
         // when
-        val response = adminService.updateUser(request)
+        val response = adminService.updateUser(userId, request)
 
         // then
         assertThat(response.isSuccess).isTrue
@@ -105,9 +105,9 @@ class AdminServiceTest : BaseTest() {
         // given
         val userId = 1L
         val request = UpdateUserRequestDto(
-            id = userId,
             password = "newPassword123",
-            address = "서울특별시 강남구 역삼동 123-45"
+            address = "서울특별시 ",
+			addressDetail = "강남구 역삼동 123-45",
         )
 
         every {
@@ -116,7 +116,7 @@ class AdminServiceTest : BaseTest() {
 
         // when
 
-        val response = adminService.updateUser(request)
+        val response = adminService.updateUser(userId, request)
 
         // then
         assertThat(response.isSuccess).isFalse

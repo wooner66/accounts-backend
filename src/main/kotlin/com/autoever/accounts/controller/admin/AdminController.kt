@@ -13,12 +13,12 @@ import com.autoever.accounts.service.messaging.MessagingService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -32,14 +32,14 @@ class AdminController(
 	}
 
 	@GetMapping("/users")
-	fun getUsers(@RequestParam request: GetUsersRequest): ResponseEntity<GetUsersResponse> {
+	fun getUsers(@ModelAttribute request: GetUsersRequest): ResponseEntity<GetUsersResponse> {
 		val response = adminService.getUsers(request.toDto())
 		return ResponseEntity.ok(response.toResponse())
 	}
 
 	@PatchMapping("/users/{userId}")
 	fun updateUser(@RequestBody request: UpdateUserRequest, @PathVariable userId: String): ResponseEntity<UpdateUserResponse> {
-		val response = adminService.updateUser(request.toDto())
+		val response = adminService.updateUser(userId.toLong(), request.toDto())
 		return ResponseEntity.ok(response.toResponse())
 	}
 
@@ -60,14 +60,12 @@ class AdminController(
 			messagingService.sendMessageToAllUsers(request.message, request.age)
 			ResponseEntity.ok(
 				SendMessageResponse(
-					isSuccess = true,
-					message = "메시지 전송 요청이 성공적으로 처리되었습니다. 모든 사용자에게 메시지가 발송됩니다."
+					message = "OK"
 				)
 			)
 		} catch (e: Exception) {
 			ResponseEntity.ok(
 				SendMessageResponse(
-					isSuccess = false,
 					message = e.message ?: "메시지 전송 요청 처리 중 오류가 발생했습니다."
 				)
 			)

@@ -3,7 +3,6 @@ package com.autoever.accounts.service.messaging
 import com.autoever.accounts.jpa.job.MessageJob
 import com.autoever.accounts.jpa.job.MessageJobRepository
 import com.autoever.accounts.messaging.AgeBucketPayload
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
@@ -16,7 +15,6 @@ class MessagingService(
 	@Value("\${app.messaging.kafka-topic:message-age-bucket}")
 	private val topic: String
 ) {
-	private val logger = LoggerFactory.getLogger(MessagingService::class.java)
 
 	@Transactional
 	fun sendMessageToAllUsers(message: String, age: Int) {
