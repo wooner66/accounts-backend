@@ -9,7 +9,7 @@ import jakarta.persistence.Table
 @Table(name = "users")
 class User(
     val username: String,
-    val password: String,
+    var password: String,
     val name: String,
     @Column(name = "rrn_front")
     val residentRegistrationNumberFront: String,
@@ -19,9 +19,21 @@ class User(
     val residentRegistrationNumberHash: String,
     val phone: String,
     // 시 도 구/군 동/읍 면 리 순으로 큰 단위부터 들어왔다는 전제(검증 생략)
-    val topLevelAddress: String,
-    val addressDetail: String,
+    var topLevelAddress: String,
+    var addressDetail: String,
 ) : BaseEntity() {
+
+    fun updatePassword(newPassword: String) {
+        this.password = newPassword
+    }
+
+    fun updateTopLevelAddress(newTopLevelAddress: String) {
+        this.topLevelAddress = newTopLevelAddress
+    }
+
+    fun updateAddress(newAddressDetail: String) {
+        this.addressDetail = newAddressDetail
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
