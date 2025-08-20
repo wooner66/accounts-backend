@@ -1,8 +1,8 @@
 package com.autoever.accounts.user
 
 import com.autoever.accounts.common.exception.DuplicatedUserException
+import com.autoever.accounts.common.test.ServiceTest
 import com.autoever.accounts.config.BaseTest
-import com.autoever.accounts.jpa.user.User
 import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.user.UserService
 import com.autoever.accounts.service.user.dto.CreateUserRequestDto
@@ -15,10 +15,9 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.password.PasswordEncoder
 
-@SpringBootTest
+@ServiceTest
 class UserServiceTest : BaseTest() {
     lateinit var userService: UserService
 

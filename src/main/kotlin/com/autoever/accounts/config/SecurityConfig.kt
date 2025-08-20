@@ -18,8 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 class SecurityConfig(
 	private val jwtAuthFilter: JwtAuthFilter,
-	@Value("\${app.admin.username}") private val adminUsername: String,
-	@Value("\${app.admin.password}") private val adminPassword: String
+	@Value("\${app.admin.username}")
+	private val adminUsername: String,
+	@Value("\${app.admin.password}")
+	private val adminPassword: String
 ) {
     @Bean
     fun passwordEncoder(): PasswordEncoder {
