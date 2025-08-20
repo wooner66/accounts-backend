@@ -3,15 +3,15 @@ package com.autoever.accounts.service.user
 import com.autoever.accounts.common.exception.DuplicatedUserException
 import com.autoever.accounts.common.extension.getTopLevelByAddress
 import com.autoever.accounts.jpa.user.User
-import com.autoever.accounts.jpa.user.UserRepository
+import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.user.dto.CreateUserRequestDto
 import com.autoever.accounts.service.user.dto.CreateUserResponseDto
 import com.autoever.accounts.util.crypto.Crypto
 import com.autoever.accounts.util.hash.Hashing
-import jakarta.transaction.Transactional
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService(

@@ -2,19 +2,20 @@ package com.autoever.accounts.user
 
 import com.autoever.accounts.common.exception.DuplicatedUserException
 import com.autoever.accounts.jpa.user.User
-import com.autoever.accounts.jpa.user.UserRepository
+import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.user.UserService
 import com.autoever.accounts.service.user.dto.CreateUserRequestDto
+import com.autoever.accounts.user.mock.UserBuilder.`사용자 Entity 생성`
 import com.autoever.accounts.util.crypto.Crypto
 import com.autoever.accounts.util.hash.Hashing
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.password.PasswordEncoder
-import kotlin.test.Test
 
 @SpringBootTest
 class UserServiceTest {
@@ -192,19 +193,5 @@ class UserServiceTest {
             .apply {
                 id = 1L
             }
-    }
-
-    private fun `사용자 Entity 생성`(requestDto: CreateUserRequestDto): User {
-        return User(
-            username = requestDto.username,
-            password = "encodedPassword",
-            name = requestDto.name,
-            residentRegistrationNumberFront = requestDto.residentRegistrationNumber.take(6),
-            residentRegistrationNumberBack = "encryptedValue",
-            residentRegistrationNumberHash = "hashedValue",
-            phone = requestDto.phoneNumber,
-            topLevelAddress = requestDto.address,
-            addressDetail = requestDto.addressDetail
-        )
     }
 }
