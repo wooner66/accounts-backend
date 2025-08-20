@@ -10,8 +10,8 @@ services:
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://host.docker.internal:9092
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
       - ALLOW_PLAINTEXT_LISTENER=yes
     ports: ["9092:9092"]
     depends_on: [zookeeper]
@@ -21,8 +21,7 @@ services:
     ports: ["6379:6379"]
 
   mock-external:
-    image: python:3.10-slim
-    volumes:
-      - ./mock_external.py:/app/mock_external.py
-    command: ["python", "/app/mock_external.py"]
+    build: ./mock-external
+    container_name: accounts-backend-mock-external-1
     ports: ["8081:8081", "8082:8082"]
+    restart: on-failure

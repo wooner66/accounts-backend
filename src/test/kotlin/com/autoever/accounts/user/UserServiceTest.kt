@@ -51,7 +51,7 @@ class UserServiceTest : BaseTest() {
             password = "password123",
             name = "Test User",
             residentRegistrationNumber = "123456-1234567",
-            phoneNumber = "01012345678",
+            phoneNumber = "010-1234-5678",
             address = "서울시",
             addressDetail = "강남구 대치동"
         )
@@ -79,7 +79,7 @@ class UserServiceTest : BaseTest() {
             password = "password123",
             name = "Existing User",
             residentRegistrationNumber = "123456-1234567",
-            phoneNumber = "01012345678",
+            phoneNumber = "010-1234-5678",
             address = "서울시",
             addressDetail = "강남구 대치동"
         )
@@ -101,7 +101,7 @@ class UserServiceTest : BaseTest() {
             password = "password123",
             name = "Test User",
             residentRegistrationNumber = "123456-1234567",
-            phoneNumber = "01012345678",
+            phoneNumber = "010-1234-5678",
             address = "서울시",
             addressDetail = "강남구 대치동"
         )
@@ -124,7 +124,7 @@ class UserServiceTest : BaseTest() {
             password = "password123",
             name = "Test User",
             residentRegistrationNumber = "invalid-rrn",
-            phoneNumber = "01012345678",
+            phoneNumber = "010-1234-5678",
             address = "서울시",
             addressDetail = "강남구 대치동"
         )
@@ -180,7 +180,7 @@ class UserServiceTest : BaseTest() {
         } returns isExistingResidentRegistrationNumber
 
         every {
-            crypto.encryptAesGcm(any())
+            crypto.encryptAndEncode(any())
         } returns "encryptedValue"
 
         every {

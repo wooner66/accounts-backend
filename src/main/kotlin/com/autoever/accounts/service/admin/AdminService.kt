@@ -61,11 +61,11 @@ class AdminService(
 	}
 
 	@Transactional
-	fun updateUser(request: UpdateUserRequestDto): UpdateUserResponseDto {
-		val user = userRepository.findByIdOrNull(request.id)
+	fun updateUser(userId: Long, request: UpdateUserRequestDto): UpdateUserResponseDto {
+		val user = userRepository.findByIdOrNull(userId)
 			?: return UpdateUserResponseDto(
 				isSuccess = false,
-				message = "사용자를 찾을 수 없습니다. : 사용자 ID = ${request.id}"
+				message = "사용자를 찾을 수 없습니다. : 사용자 ID = $userId"
 			)
 
 		request.password?.let { password ->
@@ -73,8 +73,12 @@ class AdminService(
 		}
 
 		request.address?.let { address ->
+			if (request.addressDetail == null) {
+				return@let
+			}
+
 			user.updateTopLevelAddress(address.getTopLevelByAddress())
-			user.updateAddress(address)
+			user.updateAddress("$address ${request.addressDetail}".trim())
 		}
 
 		return UpdateUserResponseDto(

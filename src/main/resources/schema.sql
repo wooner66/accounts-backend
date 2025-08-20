@@ -11,7 +11,7 @@ CREATE TABLE users (
     rrn_front VARCHAR(6) NOT NULL,
     rrn_back VARCHAR(512) NOT NULL,
     rrn_hash VARCHAR(64) NOT NULL,
-    phone VARCHAR(11) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
     top_level_address VARCHAR(40) NOT NULL,
     address_detail VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,

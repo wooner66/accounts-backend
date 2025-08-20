@@ -38,7 +38,7 @@ class UserService(
 
         val residentRegistrationNumberFront = residentRegistrationNumberDigits.take(6)
         val residentRegistrationNumberBack = residentRegistrationNumberDigits.substring(6, 13)
-        val residentRegistrationNumberBackEnc = crypto.encryptAesGcm(residentRegistrationNumberBack)
+        val residentRegistrationNumberBackEnc = crypto.encryptAndEncode(residentRegistrationNumberBack)
         val passwordHash = encoder.encode(request.password)
         val topLevelAddress = request.address.getTopLevelByAddress()
 
@@ -92,7 +92,7 @@ class UserService(
         residentRegistrationNumberHash: String,
     ) {
         require(residentRegistrationNumberDigits.length == 13) { "주민등록번호는 13자리여야 합니다." }
-        require(phoneNumber.matches(Regex("^[0-9]{11}$"))) { "핸드폰 번호는 11자리여야 합니다." }
+        require(phoneNumber.matches(Regex("""^\d{3}-\d{4}-\d{4}$"""))) { "핸드폰 번호는 11자리여야 합니다." }
 
         if (userRepository.existsByUsername(username)) {
             throw DuplicatedUserException("이미 가입된 계정(ID)입니다.")

@@ -15,7 +15,7 @@ class AuthController(
 	private val authService: AuthService,
 ) {
 	companion object {
-		const val BASE_URL = "/api"
+		const val BASE_URL = "/auth"
 	}
 
 	@PostMapping("/login")

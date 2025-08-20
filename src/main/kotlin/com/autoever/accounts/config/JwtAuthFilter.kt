@@ -19,11 +19,10 @@ class JwtAuthFilter(
 
 	override fun shouldNotFilter(request: HttpServletRequest): Boolean {
 		val path = request.servletPath
-		// exclude admin endpoints (Basic Auth), public endpoints and H2 console
 		return path.startsWith("/admin/") ||
 				path.startsWith("/h2-console") ||
-				(path == "/api/login" && request.method == "POST") ||
-				(path == "/api/users" && request.method == "POST")
+				(path == "/auth/login" && request.method == "POST") ||
+				(path == "/users" && request.method == "POST")
 	}
 
 	override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {

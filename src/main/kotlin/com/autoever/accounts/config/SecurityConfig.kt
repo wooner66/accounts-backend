@@ -3,6 +3,7 @@ package com.autoever.accounts.config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -45,8 +46,8 @@ class SecurityConfig(
 			.sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
 			.authorizeHttpRequests { auth ->
 				auth.requestMatchers("/h2-console/**").permitAll()
-				auth.requestMatchers("/api/users").permitAll()
-				auth.requestMatchers("/api/login").permitAll()
+				auth.requestMatchers(HttpMethod.POST, "/users").permitAll()
+				auth.requestMatchers("/auth/login").permitAll()
 				auth.requestMatchers("/admin/**").hasRole("ADMIN")
 				auth.anyRequest().authenticated()
 			}
