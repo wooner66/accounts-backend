@@ -1,6 +1,7 @@
 package com.autoever.accounts.user
 
 import com.autoever.accounts.common.exception.DuplicatedUserException
+import com.autoever.accounts.config.BaseTest
 import com.autoever.accounts.jpa.user.User
 import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.user.UserService
@@ -18,13 +19,13 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @SpringBootTest
-class UserServiceTest {
+class UserServiceTest : BaseTest() {
     lateinit var userService: UserService
 
     @MockkBean
     lateinit var userRepository: UserRepository
 
-    @MockkBean
+    @MockkBean(relaxed = true)
     lateinit var encoder: PasswordEncoder
 
     @MockkBean
