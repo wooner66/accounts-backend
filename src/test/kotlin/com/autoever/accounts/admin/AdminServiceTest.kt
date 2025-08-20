@@ -1,5 +1,6 @@
 package com.autoever.accounts.admin
 
+import com.autoever.accounts.common.exception.NotFoundException
 import com.autoever.accounts.jpa.user.condition.UserSearchCondition
 import com.autoever.accounts.jpa.user.repository.UserRepository
 import com.autoever.accounts.service.admin.AdminService
@@ -12,6 +13,7 @@ import io.mockk.every
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
@@ -117,5 +119,41 @@ class AdminServiceTest {
 
         // then
         assertThat(response.isSuccess).isFalse
+    }
+
+    @Test
+    fun `사용자 삭제 테스트 - 성공`() {
+        // given
+        val userId = 1L
+        val user = `사용자 Entity 생성`()
+
+        every {
+            userRepository.findByIdOrNull(userId)
+        } returns user
+
+        every {
+            userRepository.delete(user)
+        } returns Unit
+
+        // when
+        val response = adminService.deleteUser(userId)
+
+        // then
+        assertThat(response).isTrue
+    }
+
+    @Test
+    fun `사용자 삭제 테스트 - 실패`() {
+        // given
+        val userId = 1L
+
+        every {
+            userRepository.findByIdOrNull(userId)
+        } returns null
+
+        // when & then
+        assertThrows<NotFoundException> {
+            adminService.deleteUser(userId)
+        }
     }
 }
