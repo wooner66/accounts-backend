@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    username: dev_user
+    password: dev_password
+
+
+app:
+  crypto:
+    secret-key: "TESTKEYBASE64"
+    iv: "TESTIVBASE64"
+
+  jwt:
+    secret: "this-is-a-very-very-long-secret-key-string-32bytes-minimum"
+    issuer: "accounts-backend"
+    expireMinutes: 30
+
+  admin:
+    username: admin
+    password: "1212"
+
+  external:
+    kakaotalk:
+      username: autoever
+      password: 1234
+
+    sms:
+      username: autoever
+      password: 5678
